@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generate Python Programs with Blockly</title>
+  </head>
+  <body>
+    <main id="editor-layout">
+      <div id="blocklyDiv" aria-label="Block editor"></div>
+      <aside id="python-container" aria-label="Generated Python code">
+        <textarea id="python-code" aria-label="Generated Python" readonly></textarea>
+      </aside>
+    </main>
+    <nav id="workspace-actions" aria-label="Workspace actions">
+      <button id="run-program" class="round-action run" title="Run program">▶<span>Run Program</span></button>
+      <button id="load-blocks" class="round-action load" title="Load blocks">↑<span>Load Blocks from File</span></button>
+      <button id="save-blocks" class="round-action save" title="Save blocks">↓<span>Save Blocks to File</span></button>
+    </nav>
+    <nav id="python-actions" aria-label="Python actions">
+      <button id="copy-python" class="round-action copy" title="Copy Python">⧉<span>Copy Python to Clipboard</span></button>
+      <button id="save-python" class="round-action save" title="Save Python">↓<span>Save Python Code</span></button>
+    </nav>
+    <input id="block-file" type="file" accept=".blockly,.xml" hidden />
+    <p id="copied-alert" class="hidden" role="status">Python copied!</p>
+    <div id="run-overlay" class="hidden">
+      <section id="run-dialog" role="dialog" aria-modal="true" aria-label="Program output">
+        <button id="close-runner" class="round-action save" title="Close">×<span>Close</span></button>
+        <textarea id="skulpt-console" readonly></textarea>
+        <div id="skulpt-canvas"></div>
+      </section>
+    </div>
+  </body>
+</html>

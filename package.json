@@ -1,0 +1,49 @@
+{
+  "name": "blockly-python-editor",
+  "version": "0.1.0",
+  "description": "A visual Python editor built with Blockly",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "webpack --mode production",
+    "start": "webpack serve --open --mode development"
+  },
+  "keywords": [
+    "blockly"
+  ],
+  "homepage": "https://mr-douglas.github.io/blockly-python-editor/",
+  "bugs": {
+    "url": "https://github.com/mr-douglas/blockly-python-editor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mr-douglas/blockly-python-editor.git"
+  },
+  "author": "Douglas",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/codemirror": "5.60.17",
+    "copy-webpack-plugin": "14.0.0",
+    "css-loader": "^7.1.5",
+    "html-webpack-plugin": "^5.6.7",
+    "jsdom": "27.4.0",
+    "source-map-loader": "^5.0.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.6.1",
+    "typescript": "^6.0.3",
+    "vitest": "4.0.16",
+    "webpack": "^5.112.2",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-server": "^6.1.0"
+  },
+  "dependencies": {
+    "@blockly/field-angle": "13.5.0",
+    "@blockly/field-colour": "13.5.0",
+    "@fontsource/varela-round": "5.3.0",
+    "blockly": "13.5.0",
+    "codemirror": "5.65.20",
+    "skulpt": "1.2.0"
+  }
+}

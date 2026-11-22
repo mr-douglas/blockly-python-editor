@@ -1,0 +1,41 @@
+:root {
+  --run-color: forestgreen;
+  --load-color: darkgoldenrod;
+  --save-color: indianred;
+  --copy-color: forestgreen;
+  font-family: 'Varela Round', Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body, #editor-layout { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+#editor-layout { display: grid; grid-template-columns: 75% 25%; }
+#blocklyDiv { min-width: 0; height: 100vh; }
+#python-container { min-width: 0; height: 100vh; background: #222; }
+#python-container .CodeMirror { height: 100vh; font-family: monospace; font-weight: 700; }
+#workspace-actions, #python-actions { position: fixed; z-index: 10; display: flex; flex-direction: column; gap: 10px; }
+#workspace-actions { top: 10px; right: calc(25vw + 10px); }
+#python-actions { right: 10px; bottom: 12px; flex-direction: column-reverse; }
+.round-action {
+  align-self: flex-end; width: 43px; height: 43px; padding: 0 11px; overflow: hidden;
+  border: 5px solid; border-radius: 30px; color: white; font: 700 18px 'Varela Round', Arial, sans-serif;
+  text-align: left; white-space: nowrap; cursor: pointer; opacity: .9; transition: width .25s ease;
+}
+.round-action span { margin-left: 12px; font-size: 16px; }
+.round-action:hover, .round-action:focus-visible { width: min(320px, 22vw); }
+.round-action.run, .round-action.copy { border-color: var(--run-color); background: var(--run-color); }
+.round-action.load { border-color: var(--load-color); background: var(--load-color); }
+.round-action.save { border-color: var(--save-color); background: var(--save-color); }
+#copied-alert { position: fixed; z-index: 20; right: 10px; bottom: 112px; padding: 10px 18px; border-radius: 20px; color: white; background: var(--copy-color); }
+.hidden { display: none !important; }
+#run-overlay { position: fixed; z-index: 100; inset: 0; background: rgb(0 0 0 / 50%); }
+#run-dialog { position: absolute; inset: 10vh 10vw; padding: 5vh 5vw; border-radius: 30px; background: white; }
+#close-runner { position: absolute; top: 10px; right: 10px; }
+#skulpt-console { resize: none; width: 45%; height: 70vh; }
+#skulpt-canvas { position: absolute; width: 400px; height: 400px; top: calc(50% - 200px); right: 8%; border: 1px solid #222; border-radius: 4px; }
+#skulpt-console.console-only { width: 100%; }
+#skulpt-canvas.console-only, #skulpt-console.turtle-only { display: none; }
+#skulpt-canvas.turtle-only { right: calc(50% - 200px); }
+@media (max-width: 850px) {
+  #editor-layout { grid-template-columns: 65% 35%; }
+  #workspace-actions { right: calc(35vw + 8px); }
+  .round-action:hover, .round-action:focus-visible { width: 43px; }
+}
