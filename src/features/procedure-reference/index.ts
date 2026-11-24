@@ -11,10 +11,13 @@ export const procedureReferenceFeature: FeatureModule = {
   registerWorkspace(workspace) {
     workspace.registerToolboxCategoryCallback('PROCEDURE_WITH_REFERENCE', (ws) => {
       const items = Blockly.Procedures.flyoutCategory(ws);
-      items.push(
-        {kind: 'label', text: 'Use a function as a GUI callback'},
-        {kind: 'block', type: 'procedures_get_name'},
-      );
+      const [withoutReturn] = Blockly.Procedures.allProcedures(ws);
+      if (withoutReturn.length > 0) {
+        items.push(
+          {kind: 'label', text: 'Use the block below with GUI buttons'},
+          {kind: 'block', type: 'procedures_get_name'},
+        );
+      }
       return items;
     });
   },

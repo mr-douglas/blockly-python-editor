@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 
 import * as Blockly from 'blockly';
-import * as En from 'blockly/msg/en';
 import {beforeAll, describe, expect, it} from 'vitest';
 
 import {features} from '../src/features';
 import {EducationalPythonGenerator} from '../src/generator/educational-python-generator';
+import {educationalEnglish} from '../src/i18n/educational-en';
 
 let generator: EducationalPythonGenerator;
 
@@ -22,7 +22,7 @@ function attachValue(
 }
 
 beforeAll(() => {
-  Blockly.setLocale(En);
+  Blockly.setLocale(educationalEnglish);
   generator = new EducationalPythonGenerator();
   for (const feature of features) {
     feature.registerBlocks();
@@ -42,6 +42,7 @@ describe('modular feature registration', () => {
       'procedure-reference',
       'data-types',
       'time',
+      'colour',
       'turtle',
       'tkinter',
       'legacy-ev3',
@@ -49,6 +50,7 @@ describe('modular feature registration', () => {
       'gpiozero',
       'custom-code',
     ]);
+    expect(Object.keys(generator.forBlock)).toHaveLength(305);
   });
 
   it.each([
@@ -59,6 +61,10 @@ describe('modular feature registration', () => {
     'procedures_get_name',
     'float',
     'time_sleep',
+    'colour_picker',
+    'colour_random',
+    'colour_rgb',
+    'colour_blend',
     'turtle_move',
     'tkinter_window_after',
     'tkinter_set_label_image',

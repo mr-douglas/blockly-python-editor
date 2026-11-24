@@ -1,5 +1,4 @@
 import * as Blockly from 'blockly';
-import * as En from 'blockly/msg/en';
 import type {PythonGenerator} from 'blockly/python';
 import CodeMirror from 'codemirror';
 import '@fontsource/varela-round/latin-400.css';
@@ -8,12 +7,13 @@ import 'codemirror/mode/python/python';
 import 'codemirror/theme/cobalt.css';
 import {features} from './features';
 import {pythonGenerator} from './generator/educational-python-generator';
+import {educationalEnglish} from './i18n/educational-en';
 import {downloadText, loadLegacyXml, saveLegacyXml} from './persistence/files';
 import {SkulptRunner} from './runtime/skulpt-runner';
 import {toolbox} from './toolbox/index';
 import './index.css';
 
-Blockly.setLocale(En as unknown as Record<string, string>);
+Blockly.setLocale(educationalEnglish);
 features.forEach((feature) => {
   feature.registerBlocks();
   feature.registerPython(pythonGenerator as unknown as PythonGenerator);

@@ -39,6 +39,13 @@ top-level feature registry composes them explicitly. Compatibility aliases for
 the old Blockly APIs are confined to `src/blockly-compat/`; Blockly itself is
 never patched.
 
+The learner-facing palette is a separate presentation layer under
+`src/toolbox/`. It records the original category order, wording, repeated
+starter blocks, shadows, and default values without duplicating the underlying
+block implementations. Dynamic GUI and hardware palettes share one typed
+variable-category builder, so changing a preset does not require editing
+Blockly or copying callback plumbing.
+
 The application pins `blockly@13.5.0`. See [UPSTREAM.md](UPSTREAM.md) for the
 upstream policy, [the block inventory](docs/migration/block-inventory.md) for
 the compatibility contract, and [the comparison](docs/migration/upstream-comparison.md)

@@ -26,6 +26,7 @@ const directTrig = {
   output: 'Number',
   style: 'math_blocks',
   helpUrl: '%{BKY_MATH_TRIG_HELPURL}',
+  extensions: ['math_op_tooltip'],
 };
 
 const inverseTrig = {
@@ -54,6 +55,7 @@ const inverseTrig = {
   output: 'Number',
   style: 'math_blocks',
   helpUrl: '%{BKY_MATH_TRIG_HELPURL}',
+  extensions: ['math_op_tooltip'],
 };
 
 const constants = {

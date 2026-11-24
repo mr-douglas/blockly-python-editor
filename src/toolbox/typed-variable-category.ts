@@ -4,8 +4,11 @@ export interface TypedVariableCategoryConfig {
   callbackKey: string;
   createButtonText: string;
   getterBlockType: string;
+  setterBlockType?: string;
   variableType: string;
-  extraBlocks: Blockly.utils.toolbox.FlyoutItemInfo[];
+  extraBlocks:
+    | Blockly.utils.toolbox.FlyoutItemInfo[]
+    | ((workspace: Blockly.WorkspaceSvg) => Blockly.utils.toolbox.FlyoutItemInfo[]);
 }
 
 /** Registers the repeated typed-variable flyout pattern used by GUI/hardware. */
@@ -21,20 +24,34 @@ export function registerTypedVariableCategory(
       config.variableType,
     );
   });
-  workspace.registerToolboxCategoryCallback(config.callbackKey, (ws) => [
-    {
-      kind: 'button',
-      text: config.createButtonText,
-      callbackKey: buttonKey,
-    },
-    ...ws
+  workspace.registerToolboxCategoryCallback(config.callbackKey, (ws) => {
+    const variables = ws
       .getVariableMap()
-      .getVariablesOfType(config.variableType)
-      .map((variable) => ({
+      .getVariablesOfType(config.variableType);
+    const variableBlocks = (type: string) =>
+      variables.map((variable) => ({
         kind: 'block' as const,
-        type: config.getterBlockType,
+        type,
+        gap: 8,
         fields: {VAR: {id: variable.getId()}},
-      })),
-    ...config.extraBlocks,
-  ]);
+      }));
+    const extraBlocks =
+      typeof config.extraBlocks === 'function'
+        ? config.extraBlocks(ws)
+        : config.extraBlocks;
+    return [
+      {
+        kind: 'button',
+        text: config.createButtonText,
+        // Blockly's normalized JSON schema uses a lower-case `callbackkey`;
+        // `callbackKey` is the spelling used by the XML representation.
+        callbackkey: buttonKey,
+      },
+      ...(config.setterBlockType
+        ? variableBlocks(config.setterBlockType)
+        : []),
+      ...variableBlocks(config.getterBlockType),
+      ...extraBlocks,
+    ];
+  });
 }

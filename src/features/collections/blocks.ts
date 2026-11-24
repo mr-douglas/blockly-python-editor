@@ -8,7 +8,7 @@ const blocks: Blockly.JsonBlockDefinition[] = [
     previousStatement: null,
     nextStatement: null,
     style: 'list_blocks',
-    tooltip: 'Shuffle a list in place.',
+    tooltip: 'Shuffle a list in place',
     helpUrl: 'https://docs.python.org/3/library/random.html#random.shuffle',
   },
   {
@@ -50,7 +50,8 @@ const blocks: Blockly.JsonBlockDefinition[] = [
     previousStatement: null,
     nextStatement: null,
     style: 'list_blocks',
-    tooltip: 'Remove an item at a position, or the last item if blank.',
+    tooltip:
+      'Remove and return the item at the given index (or last if omitted).',
     helpUrl: '',
   },
 ];

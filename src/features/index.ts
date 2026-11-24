@@ -1,5 +1,6 @@
 import type {FeatureModule} from './types';
 import {buildHatFeature} from './buildhat';
+import {colourFeature} from './colour';
 import {collectionsFeature} from './collections';
 import {customCodeFeature} from './custom-code';
 import {dataTypesFeature} from './data-types';
@@ -26,6 +27,7 @@ export const features: FeatureModule[] = [
   procedureReferenceFeature,
   dataTypesFeature,
   timeFeature,
+  colourFeature,
   turtleFeature,
   tkinterFeature,
   legacyEv3Feature,
@@ -36,6 +38,7 @@ export const features: FeatureModule[] = [
 
 export {
   buildHatFeature,
+  colourFeature,
   collectionsFeature,
   customCodeFeature,
   dataTypesFeature,

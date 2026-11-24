@@ -120,6 +120,21 @@ original variable or loop modules. Use Blockly 13.5 directly. The application’
 typed GUI/hardware variable categories are additional toolbox behavior, not a
 reason to replace upstream variable blocks.
 
+## Educational toolbox presentation
+
+Repeated entries in the original toolbox are deliberate starter presets, not
+separate block implementations. The modern application therefore reuses each
+maintained block type while declaring multiple toolbox entries for choices such
+as addition/subtraction/multiplication/division/powers and direct/inverse
+trigonometry. The same presentation layer preserves the original shadows and
+defaults for text, loops, lists, Turtle, GUI, Build HAT, Raspberry Pi, and
+legacy EV3 blocks.
+
+Blockly 13 distributes its standard colour blocks with the maintained
+`@blockly/field-colour` plugin rather than Blockly core. The application
+registers those official blocks and Python generators as a small feature, then
+presents them in Turtle and RGB LED exactly where the original toolbox did.
+
 ## Custom-only feature families
 
 Blockly core has no direct equivalents for these original feature families, so
@@ -179,13 +194,13 @@ generator parity:
 | Time | 2 | 2 |
 | Turtle | 21 | 21 |
 
-The migrated feature registry contains 240 Python handlers in total. The 52
-handlers present in the old source scan but deliberately not copied are current
-Blockly standard handlers: controls (2), lists (12), logic (6), math (12),
-procedures (5), and text (15). Blockly 13 supplies those maintained
-implementations directly. The application then narrowly adds or overrides the
-documented list, error-handling, callback-reference, text, and math teaching
-behavior.
+The migrated feature registry contains 305 Python handlers in total, including
+the four colour handlers supplied by Blockly's official plugin. The 52 handlers
+present in the old source scan but deliberately not copied are current Blockly
+standard handlers: controls (2), lists (12), logic (6), math (12), procedures
+(5), and text (15). Blockly 13 supplies those maintained implementations
+directly. The application then narrowly adds or overrides the documented list,
+error-handling, callback-reference, text, and math teaching behavior.
 
 Build HAT motor pairs remain registered but toolbox-hidden, the dormant
 Tkinter widget families remain loadable but toolbox-hidden, and EV3 remains in

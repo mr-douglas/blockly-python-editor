@@ -1,14 +1,13 @@
 import * as Blockly from 'blockly';
 
-const promptTypes: Blockly.MenuOption[] = [
-  [Blockly.Msg['TEXT_PROMPT_TYPE_TEXT'] || 'text', 'TEXT'],
-  [Blockly.Msg['TEXT_PROMPT_TYPE_NUMBER'] || 'number', 'NUMBER'],
-  ['integer', 'INTEGER'],
-];
-
 function updatePromptType(block: Blockly.Block, type: string): void {
   block.outputConnection?.setCheck(
     type === 'NUMBER' || type === 'INTEGER' ? 'Number' : 'String',
+  );
+  block.setColour(
+    type === 'TEXT'
+      ? Blockly.Msg['TEXTS_HUE'] || '160'
+      : Blockly.Msg['MATH_HUE'] || '230',
   );
 }
 
@@ -21,7 +20,7 @@ export function registerBlocks(): void {
         message0: 'new line',
         output: 'String',
         style: 'text_blocks',
-        tooltip: 'A new-line character.',
+        tooltip: "A newline character '\\n'",
         helpUrl: '',
       });
     },
@@ -32,6 +31,23 @@ export function registerBlocks(): void {
   Blockly.Blocks['text_prompt_ext'] = {
     init() {
       const block = this;
+      const promptTypes: Blockly.MenuOption[] = [
+        [
+          Blockly.Msg['TEXT_PROMPT_TYPE_TEXT'] ||
+            'get text input from user with message',
+          'TEXT',
+        ],
+        [
+          Blockly.Msg['TEXT_PROMPT_TYPE_NUMBER'] ||
+            'get number input from user with message',
+          'NUMBER',
+        ],
+        [
+          Blockly.Msg['TEXT_PROMPT_TYPE_INTEGER'] ||
+            'get integer input from user with message',
+          'INTEGER',
+        ],
+      ];
       const dropdown = new Blockly.FieldDropdown(promptTypes, (newType) => {
         updatePromptType(block, newType);
         return newType;
@@ -39,6 +55,7 @@ export function registerBlocks(): void {
       this.appendValueInput('TEXT').appendField(dropdown, 'TYPE');
       this.setOutput(true, 'String');
       this.setStyle('text_blocks');
+      updatePromptType(this, 'TEXT');
       this.setHelpUrl(Blockly.Msg['TEXT_PROMPT_HELPURL'] || '');
       this.setTooltip(() =>
         this.getFieldValue('TYPE') === 'TEXT'

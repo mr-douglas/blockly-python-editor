@@ -12,7 +12,7 @@ export function registerBlocks(): void {
         new Blockly.FieldDropdown(this.dropdownProcedureNames_.bind(this)),
         'NAME',
       );
-      this.setTooltip('Get a reference to the named function.');
+      this.setTooltip('Get a reference to the named procedure.');
     },
     dropdownProcedureNames_() {
       const workspace = this.workspace?.isFlyout

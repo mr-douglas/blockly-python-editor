@@ -17,7 +17,7 @@ export function registerBlocks(): void {
       nextStatement: null,
       style: 'logic_blocks',
       tooltip:
-        'Try some instructions, handle errors, and then always run the final instructions.',
+        'Try some instructions, handle errors, and then always run the final instructions',
       helpUrl:
         'https://docs.python.org/3/tutorial/errors.html#handling-exceptions',
     },
