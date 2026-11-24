@@ -37,7 +37,19 @@ export function registerBlocks(): void {
     onchange(event) {
       if (!this.workspace || this.workspace.isFlyout) return;
       const value = this.getFieldValue('NAME');
-      if (value) this.procedureName_ = value;
+      if (value) {
+        // Keep the cached definition ID aligned with a new dropdown choice.
+        // Otherwise the rename-tracking code below restores the previously
+        // selected procedure as soon as the change event is handled.
+        if (!Blockly.Names.equals(value, this.procedureName_)) {
+          const selectedDefinition = Blockly.Procedures.getDefinition(
+            value,
+            this.workspace,
+          );
+          this.procedureId_ = selectedDefinition?.id || '';
+        }
+        this.procedureName_ = value;
+      }
 
       if (
         event &&

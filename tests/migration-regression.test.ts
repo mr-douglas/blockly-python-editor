@@ -218,4 +218,30 @@ describe('legacy project compatibility', () => {
     expect(workspace.getBlockById(reference.id)).toBeNull();
     workspace.dispose();
   });
+
+  it('keeps a newly selected procedure reference', () => {
+    const workspace = makeWorkspace();
+    const firstDefinition = workspace.newBlock('procedures_defnoreturn');
+    firstDefinition.setFieldValue('first', 'NAME');
+    const secondDefinition = workspace.newBlock('procedures_defnoreturn');
+    secondDefinition.setFieldValue('second', 'NAME');
+    const reference = workspace.newBlock('procedures_get_name');
+
+    (reference as any).onchange({type: Blockly.Events.BLOCK_CREATE});
+    expect(reference.getFieldValue('NAME')).toBe('first');
+
+    reference.setFieldValue('second', 'NAME');
+    (reference as any).onchange({
+      type: Blockly.Events.BLOCK_CHANGE,
+      blockId: reference.id,
+      element: 'field',
+      name: 'NAME',
+      oldValue: 'first',
+      newValue: 'second',
+    });
+
+    expect(reference.getFieldValue('NAME')).toBe('second');
+    expect((reference as any).procedureId_).toBe(secondDefinition.id);
+    workspace.dispose();
+  });
 });
