@@ -15,11 +15,13 @@ html, body, #editor-layout { width: 100%; height: 100%; margin: 0; overflow: hid
 #workspace-actions { top: 10px; right: calc(25vw + 10px); }
 #python-actions { right: 10px; bottom: 12px; flex-direction: column-reverse; }
 .round-action {
-  align-self: flex-end; width: 43px; height: 43px; padding: 0 11px; overflow: hidden;
+  display: flex; align-items: center; align-self: flex-end; width: 43px; height: 43px; padding: 0; overflow: hidden;
   border: 5px solid; border-radius: 30px; color: white; font: 700 18px 'Varela Round', Arial, sans-serif;
   text-align: left; white-space: nowrap; cursor: pointer; opacity: .9; transition: width .25s ease;
 }
-.round-action span { margin-left: 12px; font-size: 16px; }
+/* Font Awesome icon, centred in the circle (the kit may swap the <i> for an <svg>) */
+.round-action > i, .round-action > svg { flex: none; width: 33px; text-align: center; }
+.round-action span { margin-left: 4px; font-size: 16px; }
 .round-action:hover, .round-action:focus-visible { width: min(320px, 22vw); }
 .round-action.run, .round-action.copy { border-color: var(--run-color); background: var(--run-color); }
 .round-action.load { border-color: var(--load-color); background: var(--load-color); }
