@@ -49,7 +49,7 @@ const workspace = Blockly.inject(blocklyDiv, {
 features.forEach((feature) => feature.registerWorkspace?.(workspace));
 
 const codeEditor = CodeMirror.fromTextArea(
-  requiredElement<HTMLTextAreaElement>('python-code'),
+  requiredElement<HTMLTextAreaElement>('python-div'),
   {
     value: "print('Hello, World!')\n",
     mode: 'python',
@@ -60,7 +60,8 @@ const codeEditor = CodeMirror.fromTextArea(
 );
 
 const runner = new SkulptRunner({
-  container: requiredElement('run-overlay'),
+  container: requiredElement('skulpt-container'),
+  excluder: requiredElement('excluder'),
   console: requiredElement<HTMLTextAreaElement>('skulpt-console'),
   canvas: requiredElement('skulpt-canvas'),
 });
@@ -79,29 +80,45 @@ workspace.addChangeListener((event) => {
 });
 updatePython();
 
-requiredElement<HTMLButtonElement>('copy-python').addEventListener('click', async () => {
-  await navigator.clipboard.writeText(generatedPython());
-  const alert = requiredElement('copied-alert');
-  alert.classList.remove('hidden');
-  window.setTimeout(() => alert.classList.add('hidden'), 2000);
+/**
+ * The round buttons are <a role="button"> elements (as in the original
+ * editor), so make them work from the keyboard as well as the mouse.
+ */
+function onActivate(id: string, action: () => void): void {
+  const button = requiredElement(id);
+  button.addEventListener('click', action);
+  button.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    action();
+  });
+}
+
+let copiedAlertTimer: number | undefined;
+onActivate('copy-python-button', () => {
+  void navigator.clipboard.writeText(generatedPython()).then(() => {
+    // Same fade in/out animation as the original editor.
+    const alert = requiredElement('copied-alert');
+    window.clearTimeout(copiedAlertTimer);
+    alert.className = 'hidden';
+    void alert.offsetWidth; // Restart the animation if it is already running.
+    alert.className = 'alert';
+    copiedAlertTimer = window.setTimeout(() => {
+      alert.className = 'hidden';
+    }, 2000);
+  });
 });
-requiredElement<HTMLButtonElement>('save-python').addEventListener('click', () =>
+onActivate('save-python-button', () =>
   downloadText(generatedPython(), '.py', 'my_python_program'),
 );
-requiredElement<HTMLButtonElement>('save-blocks').addEventListener('click', () =>
+onActivate('save-blocks-button', () =>
   downloadText(saveLegacyXml(workspace), '.blockly', 'my_blockly_program'),
 );
-requiredElement<HTMLButtonElement>('run-program').addEventListener('click', () =>
-  void runner.run(generatedPython()),
-);
-requiredElement<HTMLButtonElement>('close-runner').addEventListener('click', () =>
-  runner.stop(),
-);
+onActivate('run-blocks-button', () => void runner.run(generatedPython()));
+onActivate('skulpt-close-button', () => runner.stop());
 
-const fileInput = requiredElement<HTMLInputElement>('block-file');
-requiredElement<HTMLButtonElement>('load-blocks').addEventListener('click', () =>
-  fileInput.click(),
-);
+const fileInput = requiredElement<HTMLInputElement>('inputfile');
+onActivate('load-blocks-button', () => fileInput.click());
 fileInput.addEventListener('change', async () => {
   const file = fileInput.files?.[0];
   if (!file) return;

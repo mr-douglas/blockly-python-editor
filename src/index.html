@@ -4,33 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Generate Python Programs with Blockly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
     <!-- Same Font Awesome kit as https://mr-douglas.github.io/blockly/ -->
     <script src="https://kit.fontawesome.com/7943986573.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <main id="editor-layout">
-      <div id="blocklyDiv" aria-label="Block editor"></div>
-      <aside id="python-container" aria-label="Generated Python code">
-        <textarea id="python-code" aria-label="Generated Python" readonly></textarea>
-      </aside>
-    </main>
-    <nav id="workspace-actions" aria-label="Workspace actions">
-      <button id="run-program" class="round-action run" title="Run program"><i class="fas fa-play" aria-hidden="true"></i><span>Run Program</span></button>
-      <button id="load-blocks" class="round-action load" title="Load blocks"><i class="fas fa-file-upload" aria-hidden="true"></i><span>Load Blocks from File</span></button>
-      <button id="save-blocks" class="round-action save" title="Save blocks"><i class="fas fa-file-download" aria-hidden="true"></i><span>Save Blocks to File</span></button>
-    </nav>
-    <nav id="python-actions" aria-label="Python actions">
-      <button id="copy-python" class="round-action copy" title="Copy Python"><i class="fas fa-copy" aria-hidden="true"></i><span>Copy Python to Clipboard</span></button>
-      <button id="save-python" class="round-action save" title="Save Python"><i class="fas fa-file-download" aria-hidden="true"></i><span>Save Python Code</span></button>
-    </nav>
-    <input id="block-file" type="file" accept=".blockly,.xml" hidden />
-    <p id="copied-alert" class="hidden" role="status"><i class="fas fa-copy" aria-hidden="true"></i> Python copied!</p>
-    <div id="run-overlay" class="hidden">
-      <section id="run-dialog" role="dialog" aria-modal="true" aria-label="Program output">
-        <button id="close-runner" class="round-action save" title="Close"><i class="fas fa-times" aria-hidden="true"></i><span>Close</span></button>
-        <textarea id="skulpt-console" readonly></textarea>
-        <div id="skulpt-canvas"></div>
-      </section>
+    <!-- The layout, ids and classes mirror https://mr-douglas.github.io/blockly/
+         (index.html and style.css) so that the two editors look the same. -->
+    <div id="python-container" aria-label="Generated Python code">
+      <textarea readonly id="python-div" aria-label="Generated Python"></textarea>
     </div>
+    <p id="copied-alert" class="hidden" role="status"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span><span class="text"> Copied!</span></p>
+    <a id="copy-python-button" class="my-button" role="button" tabindex="0" title="Copy Python to Clipboard"><span class="icon"><i class="fas fa-copy" aria-hidden="true"></i></span><span class="text"> Copy Python to Clipboard</span></a>
+    <a id="save-python-button" class="my-button" role="button" tabindex="0" title="Save Python Code"><span class="icon"><i class="fas fa-file-download" aria-hidden="true"></i></span><span class="text"> Save Python Code</span></a>
+    <a id="run-blocks-button" class="my-button" role="button" tabindex="0" title="Run Program"><span class="icon"><i class="fas fa-play" aria-hidden="true"></i></span><span class="text"> Run Program</span></a>
+    <a id="load-blocks-button" class="my-button" role="button" tabindex="0" title="Load Blocks from File"><span class="icon"><i class="fas fa-file-upload" aria-hidden="true"></i></span><span class="text"> Load Blocks from File</span></a>
+    <a id="save-blocks-button" class="my-button" role="button" tabindex="0" title="Save Blocks to File"><span class="icon"><i class="fas fa-file-download" aria-hidden="true"></i></span><span class="text"> Save Blocks to File</span></a>
+    <input type="file" name="inputfile" id="inputfile" accept=".blockly,.xml" style="display: none;" />
+    <div id="excluder" class="hidden"></div>
+    <div id="skulpt-container" class="hidden" role="dialog" aria-modal="true" aria-label="Program output">
+      <textarea id="skulpt-console" class="both" readonly></textarea>
+      <div id="skulpt-canvas" class="both"></div>
+      <a id="skulpt-close-button" class="my-button" role="button" tabindex="0" title="Close"><span class="icon"><i class="fas fa-times" aria-hidden="true"></i></span><span class="text"> Close</span></a>
+    </div>
+    <div id="blocklyDiv" aria-label="Block editor"></div>
   </body>
 </html>

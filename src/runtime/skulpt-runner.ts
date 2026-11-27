@@ -2,6 +2,8 @@ import Sk from 'skulpt';
 
 export interface RunSurface {
   container: HTMLElement;
+  /** Optional dimmed backdrop shown behind the container while running. */
+  excluder?: HTMLElement;
   console: HTMLTextAreaElement;
   canvas: HTMLElement;
 }
@@ -40,7 +42,7 @@ export class SkulptRunner {
     this.configureSurface(needsConsole, needsTurtle);
     this.restoreExecutionLimit();
     this.surface.console.value = '';
-    this.surface.container.classList.remove('hidden');
+    this.setVisible(true);
     this.running = true;
     try {
       await Sk.misceval.asyncToPromise(() =>
@@ -62,7 +64,13 @@ export class SkulptRunner {
         return 'You stopped the Python program.';
       };
     }
-    this.surface.container.classList.add('hidden');
+    this.setVisible(false);
+  }
+
+  private setVisible(visible: boolean): void {
+    for (const element of [this.surface.excluder, this.surface.container]) {
+      element?.classList.toggle('hidden', !visible);
+    }
   }
 
   private configureSurface(needsConsole: boolean, needsTurtle: boolean): void {

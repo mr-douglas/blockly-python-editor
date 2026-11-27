@@ -5,6 +5,10 @@
 - Buttons use the same Font Awesome icons as the original editor.
 - Blocks use the original editor's vibrant colours (HSV saturation 0.9,
   value 0.7) instead of Blockly's paler defaults.
+- The page now uses the original editor's layout and `style.css`: the same
+  round buttons (size, colours, positions, hover labels), Python panel,
+  "Copied!" alert and run window, so it looks like
+  https://mr-douglas.github.io/blockly/.
 
 ## 0.1.0 - 2026-11-22
 
