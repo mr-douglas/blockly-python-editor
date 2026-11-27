@@ -10,8 +10,12 @@ import {pythonGenerator} from './generator/educational-python-generator';
 import {educationalEnglish} from './i18n/educational-en';
 import {downloadText, loadLegacyXml, saveLegacyXml} from './persistence/files';
 import {SkulptRunner} from './runtime/skulpt-runner';
+import {useOriginalBlockColours} from './theme/original-block-colours';
 import {toolbox} from './toolbox/index';
 import './index.css';
+
+// Must happen before any blocks are created or the workspace is injected.
+useOriginalBlockColours();
 
 Blockly.setLocale(educationalEnglish);
 features.forEach((feature) => {
